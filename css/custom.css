@@ -1,0 +1,187 @@
+html{
+
+}
+body{
+  font-family: "Open Sans";
+}
+/* ng-cloak */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng.ng-cloak {
+    display: none;
+}
+
+h3 {
+  font-size: 1.3em;
+}
+.label-md {
+  font-size: 90%;
+}
+
+.header-logo {
+  color: white;
+}
+.header-anything,
+.icon-highlight {
+  color: #f0ad4e;
+}
+
+.space-top {
+  margin-top: 10px;
+}
+.lead-blurb {
+}
+  .lead-blurb p {
+    margin: 0;
+    padding: 10px;
+  }
+
+.dotted-below {
+  border-bottom: 2px dotted #aaa;
+}
+
+.accordion-toggle {
+  cursor: pointer;
+}
+
+.modal-close {
+  margin: 10px;
+  color: rgb(4, 0, 65);
+}
+
+.errorMessage {
+  font-size: 80%;
+}
+
+.full-input {
+  width: 100%;
+}
+
+.outcome-select {
+  width: 100%;
+}
+
+.my-score {
+  background: ;
+}
+
+.actual-outcome {
+  display: block;
+  font-weight: normal;
+  padding: 6px 0;
+  white-space: initial;
+  width: 100%;
+}
+
+.outcome.panel-default {
+  color: #999;
+  background: #efefef;
+}
+
+.label-lg {
+  font-size: 110%;
+}
+
+.panel-heading h3,
+.panel-body h3,
+.modal-body h3 {
+  margin: 0;
+}
+
+.navbar-default {
+ background-color: #fff; 
+ border-color: #fff; 
+}
+.navbar {
+ margin-bottom: 0; 
+}
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+margin-top: 10px;
+}
+.nav>li>a.btn:hover{
+  color: #fff;
+}
+.modal-content {
+  border-radius: 0;
+}
+.modal-header {
+  background: rgb(242, 242, 242);
+}
+
+
+textarea, textarea.form-control, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+border-radius: 0 !important;
+color: #858585;
+background-color: #fff;
+border: 1px solid #d5d5d5;
+padding: 5px 8px 6px;
+font-size: 14px;
+font-family: inherit;
+-webkit-box-shadow: none !important;
+box-shadow: none !important;
+-webkit-transition-duration: .1s;
+transition-duration: .1s;
+}
+
+
+/*
+ * Globals
+ */
+
+
+/*
+ * Masthead for nav
+ */
+
+.blog-masthead {
+  background-color: #4582ec;
+  -webkit-box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+          box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+}
+
+/* Nav links */
+.blog-nav-item {
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+  font-weight: 500;
+  color: #cdddeb;
+}
+.blog-nav-item:hover,
+.blog-nav-item:focus {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Active state gets a caret at the bottom */
+.blog-nav .active {
+  color: #fff;
+}
+.blog-nav .active:after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  vertical-align: middle;
+  content: " ";
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid;
+  border-left: 5px solid transparent;
+}
+
+
+/*
+ * Blog name and description
+ */
+
+.blog-header {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.blog-title {
+  margin-top: 30px;
+  margin-bottom: 0;
+  font-weight: normal;
+}
+
+

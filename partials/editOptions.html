@@ -1,0 +1,48 @@
+<button type="button" class="close" ng-click="cancel();">
+  <i class="fa fa-times-circle-o modal-close"></i>
+</button>
+
+<div class="modal-header">
+  <h3 class="modal-title">Edit Question Options</h3>
+</div>
+
+<div class="modal-body">
+  <form name="new_sheet_form" class="form-horizontal" role="form" novalidate>
+    
+    <div class="form-group" ng-repeat="option in options" ng-hide="option.deleted">
+      <label class="col-sm-3 control-label no-padding-right ng-binding">
+        Option {{$index+1}}
+      </label>
+      <div class="col-sm-9">
+        <div class="row">
+          <div class="col-xs-10">
+            <span class="block input-icon input-icon-right">
+              <input type="text" class="form-control" name="name" placeholder="Option Name" ng-model="option.name" focus="">
+            </span>
+          </div>
+          <div class="col-xs-2 text-center">
+            <button ng-click="deleteOption($index)" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-9 col-sm-offset-3">
+        <a class="btn btn-danger" ng-click="addOption()"><i class="fa fa-plus"></i> Add New Option</a>
+      </div>
+    </div>
+
+    <form-element label="">
+        <div class="text-right">
+          <a class="btn" ng-click="cancel()"><i class="ace-icon fa fa-reply"></i> Cancel</a>
+          <button ng-click="saveChanges()"
+                  ng-disabled="new_sheet_form.$invalid"
+                  class="btn btn-primary"
+                  type="submit">
+            <i class="ace-icon fa fa-floppy-o"></i> Save Changes
+          </button>
+        </div>
+      </form-element>
+  </form>
+</div>

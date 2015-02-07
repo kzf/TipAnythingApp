@@ -1,0 +1,24 @@
+<h2>Search TipAnything <i class="visible-xs fa fa-search pull-left icon-highlight"></i></h2>
+<hr/>
+
+<div class="row form-group">
+	<div class="hidden-xs col-sm-2 text-right">
+		<i class="fa fa-2x fa-search icon-highlight"></i>
+	</div>
+	<div class="col-sm-8">
+		<input class="full-input" ng-keypress="keyPress($event)" ng-model="query.query" type="search" placeholder="Search"/>
+	</div>
+	<div class="col-sm-2 pull-right">
+		<button class="btn btn-primary" ng-click="search(query.query)">Search</button>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-9 col-md-offset-1">
+		<p class="col-sm-8 col-sm-offset-2" ng-show="results.length === 0">
+			No results to show.
+		</p>
+		<div ng-repeat="sheet in results" sheet-preview="sheet">
+		</div>
+	</div>
+</div>

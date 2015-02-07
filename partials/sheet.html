@@ -1,0 +1,103 @@
+<div class="panel panel-primary space-top">
+  <div class="panel-heading">
+    <h3>{{sheet.title}}</h3>
+  </div>
+  <div class="panel-body">
+    <p>{{sheet.description}}</p>
+  </div>
+</div>
+
+<div class="row">
+	<div class="col-md-8">
+		<div ng-class="{'panel-default': question.closed, 'panel-primary': !question.closed}" class="outcome panel" ng-repeat="question in questions">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-sm-7">
+						<h3>{{question.question}}</h3>
+					</div>
+					<div class="col-sm-5">
+						<!--<select ng-disabled="question.closed" class="outcome-select">
+							<option ng-selected="question.response === null">Select your pick</option>
+							<option ng-selected="question.response === option.id" value="option.id" ng-repeat="option in question.options">{{option.name}}</option>
+						</select>-->
+						<select ng-disabled="question.closed" class="outcome-select" ng-model="question.response" 
+										ng-options="option.id as option.name for option in question.options">
+						</select>
+						<div ng-show="question.scored">
+							<h4>Actual Outcome:</h4>
+							<span ng-show="question.correct_id === question.response" class="label label-lg label-success actual-outcome"><i class="fa fa-check"></i> {{question.actual}}</span>
+							<span ng-hide="question.correct_id === question.response"class="label label-lg label-danger actual-outcome"><i class="fa fa-times"></i> {{question.actual}}</span>
+						</div>
+						<div ng-show="editing" class="btn-toolbar space-top pull-right">
+							<a ng-hide="question.closed || question.options.length === 0" ng-href class="btn btn-danger" ng-click="confirmFreeze(question)">Freeze Tipping</a>
+							<a ng-hide="question.closed" ng-href class="btn btn-danger" ng-click="editOptions(question)">Edit</a>
+							<a ng-show="question.closed && !question.scored" ng-href class="btn btn-danger" ng-click="selectCorrectResponse(question)">Select Correct Outcome</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default" ng-show="editing">
+			<div class="panel-heading">
+				<div class="btn-toolbar pull-right">
+					<a class="btn btn-danger" ng-click="closeSheet(sheet)"><i class="fa fa-plus"></i> Close Sheet</a>
+					<a class="btn btn-danger" ng-click="addNewQuestion()"><i class="fa fa-plus"></i> Add Question</a>
+				</div>
+				<h5>Owner Controls</h5>
+			</div>
+		</div>
+		<div class="panel panel-info" ng-show="takingPart">
+			<div class="panel-heading">
+				<a ng-href class="btn btn-primary pull-right" ng-click="saveTips()"><i class="fa fa-floppy-o"></i> Save Tips</a>
+				<h5>Happy with your tips?</h5>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-warning" ng-hide="takingPart || !loggedIn">
+			<div class="panel-heading text-center">
+				<p>You are not currently taking part in this tipping sheet.</p>
+				<a class="btn btn-info" ng-href="" ng-click="joinSheet(sheet_id)"><i class="fa fa-users fa-lg"></i> Join</a>
+				<!--<a  class="btn btn-danger" ng-href="#/sheet/{{sheet.id}}"><i class="fa fa-user-times fa-lg"></i> Leave</a>-->
+			</div>
+		</div>
+		<div class="panel panel-warning" ng-hide="loggedIn">
+			<div class="panel-heading text-center">
+				<p>Log in or register to make your picks!</p>
+				<a class="btn btn-info" ng-href="#/login"><i class="fa fa-user fa-lg"></i> Login</a>
+				<a class="btn btn-info" ng-href="#/register"><i class="fa fa-user fa-lg"></i> Register</a>
+			</div>
+		</div>
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				<h3>Leaderboards</h3>
+			</div>
+			<table class="table">
+		    <tr>
+					<th>Username</th>
+					<th>Score</th>
+		    </tr>
+		    <tr ng-repeat="user in leaderboard" ng-class="{'warning':{{user.id === auth.id}}}">
+					<td><a ng-href="">{{user.username}}</a></td>
+					<td>{{user.score}}</td>
+		    </tr>
+		  </table>
+		</div>
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				<h3>Owners</h3>
+			</div>
+			<table class="table">
+		    <tr>
+					<th>Username</th>
+		    </tr>
+		    <tr ng-repeat="user in owners">
+					<td><a ng-href="">{{user.username}}</a></td>
+		    </tr>
+		  </table>
+		  <div ng-show="editing" class="btn-toolbar space-top pull-right">
+				<a class="btn btn-danger pull-right" ng-click="addNewOwner()"><i class="fa fa-plus"></i> Add New Owner</a>
+			</div>
+		</div>
+	</div>
+</div>

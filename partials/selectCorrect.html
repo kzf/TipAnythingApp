@@ -1,0 +1,35 @@
+<button type="button" class="close" ng-click="cancel();">
+  <i class="fa fa-times-circle-o modal-close"></i>
+</button>
+
+<div class="modal-header">
+  <h3 class="modal-title">Select Actual Outcome</h3>
+</div>
+
+<div class="modal-body">
+  <form name="new_sheet_form" class="form-horizontal" role="form" novalidate>
+    
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <h3>{{question.question}}</h3>
+      </div>
+      <div class="col-sm-6">
+        <span class="block input-icon input-icon-right">
+          <select class="full-input" ng-model="response.actual" ng-options="option.id as option.name for option in question.options"></select>
+        </span>
+      </div>
+    </div>
+
+    <form-element label="">
+        <div class="text-right">
+          <a class="btn" ng-click="cancel()"><i class="ace-icon fa fa-reply"></i> Cancel</a>
+          <button ng-click="saveActualOutcome()"
+                  ng-disabled="new_sheet_form.$invalid"
+                  class="btn btn-danger"
+                  type="submit">
+            <i class="ace-icon fa fa-floppy-o"></i> Save as Actual Outcome
+          </button>
+        </div>
+      </form-element>
+  </form>
+</div>

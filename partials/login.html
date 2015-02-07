@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-1">
+    <div id="login-box" class="login-box visible widget-box no-border">
+      <div class="widget-body">
+        <div class="widget-main">
+          <h3 class="dotted-below">
+            Log In to TipAnything
+          </h3>
+          <form name="loginForm" class="form-horizontal space-top" role="form">
+            <div class="form-group">
+              <label class="col-sm-5 control-label no-padding-right" for="username">Username</label>
+              <div class="col-sm-7">
+                <span class="block input-icon input-icon-right">
+                  <input type="text" class="form-control" placeholder="Name" ng-model="login.username" focus required />
+                </span>
+              </div>
+            </div>
+            <div class="form-group has-feedback">
+              <label class="col-sm-5 control-label no-padding-right" for="password">Password</label>
+              <div class="col-sm-7">
+              <span class="block input-icon input-icon-right">
+                <input type="password" class="form-control" name = "password" placeholder="Password" ng-model="login.password" required/>
+                <span class="errorMessage" data-ng-show="loginForm.password.$dirty && loginForm.password.$invalid"> Enter Password</span>
+              </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <button type="submit" class="width-35 pull-right btn btn-sm btn-primary" ng-click="doLogin(login)" data-ng-disabled="loginForm.$invalid">
+                  Log In
+                </button>
+              </div>
+            </div>
+              </fieldset>
+              <span class="lbl col-sm-5"></span>
+              <div class="col-sm-7">Don't have an account? <a href="#/register">Register</a>
+              </div>
+          </form>
+        </div>
+    </div>
+  </div>
+</div>

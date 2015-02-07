@@ -1,0 +1,11 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+  	<span class="label label-warning label-md pull-right" ng-show="sheet.num_players"><i class="fa fa-users"></i> {{sheet.num_players}}</span>
+    <h3>{{sheet.title}}</h3>
+  </div>
+  <div class="panel-body">
+    <p>{{sheet.description}}</p>
+    <span class="pull-left label label-default pull-right" ng-show="sheet.timestamp">Created on {{sheet.timestamp * 1000 | date: 'longDate'}}</span>
+    <a class="btn btn-info pull-right" ng-href="#/sheet/{{sheet.id}}">Go To Sheet <i class="fa fa-arrow-circle-right"></i></a>
+  </div>
+</div>

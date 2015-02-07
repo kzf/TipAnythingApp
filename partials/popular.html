@@ -1,0 +1,34 @@
+<section class="space-top lead-blurb">
+  <p class="lead dotted-below">TipAnything is the completely customisable tipping site that's perfect for setting up a tipping league between you and your friends. Sign up now to join in!</p>
+</section>
+
+<h2>F.A.Q.</h2>
+<hr/>
+
+<div class="row">
+	<div class="col-md-9 col-md-offset-1">
+		<accordion close-others="true">
+	    <accordion-group class="panel-primary" heading="What is an owner?">
+	      Owners are the users who manage the tipping sheet. They can change questions, options and are responsible for freezing questions and for entering the correct result once it is known. Make sure you trust the owners of your league to be honest and accurate in their management!
+	    </accordion-group>
+	    <accordion-group class="panel-primary" heading="What does it mean to freeze a question?">
+	      Freezing a question means that players answers are locked in and they can no longer change them. It is important you do not forget to freeze the questions before the event happens to ensure sneaky users do not come and choose the correct outcome once they know it. You may choose to freeze your questions a few days before the event to make sure.
+	    </accordion-group>
+	  </accordion>
+	</div>
+</div>
+
+
+<h2>Popular Tipping Sheets</h2>
+<hr/>
+
+<div class="row">
+	<div class="col-md-9 col-md-offset-1">
+		<div ng-repeat="sheet in popular" sheet-preview="sheet">
+		</div>
+	</div>
+</div>
+
+<hr />
+
+Not what you're looking for? <a ng-href="#/search">Search</a> our complete sheet collection.

@@ -1,0 +1,26 @@
+<button type="button" class="close" ng-click="cancel();">
+  <i class="fa fa-times-circle-o modal-close"></i>
+</button>
+
+<div class="modal-header">
+  <h3 class="modal-title">Add New Owner</h3>
+</div>
+
+<div class="modal-body">
+  <form name="new_owner_form" class="form-horizontal" role="form" novalidate>
+    <form-element label="Owner's Username" mod="owner">
+      <input type="text" class="form-control full-input" name="title" placeholder="Enter owner's username" ng-model="owner.username" focus/>
+    </form-element>
+
+    <form-element label="">
+        <div class="text-right">
+          <a class="btn" ng-click="cancel()"><i class="ace-icon fa fa-reply"></i> Cancel</a>
+          <button ng-click="saveOwner()"
+                  class="btn btn-primary"
+                  type="submit">
+            <i class="ace-icon fa fa-check"></i> Add New Owner
+          </button>
+        </div>
+      </form-element>
+  </form>
+</div>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+  <title ng-bind="'TipAnything &mdash; ' + title">TipAnything</title>
+  <meta name="Description" content="Create your own tipping pools about anything you like!">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+  <link rel="stylesheet" href="css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="css/toaster.css" type="text/css" />
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" type="text/css" />
+
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+</head>
+
+<body ng-cloak="">
+  <div class="blog-masthead" ng-controller="AuthCtrl">
+    <div class="container">
+      <h1 class="header-logo">Tip<span class="header-anything">Anything</span></h1>
+      <nav class="blog-nav" ng-controller="NavCtrl">
+        <a class="blog-nav-item" ng-class="getClass('/', true)" href="#/">Home</a>
+        <a class="blog-nav-item" ng-class="getClass('/search', true)" href="#/search"><i class="fa fa-search"></i> Search Sheets</a>
+        <a ng-show="authenticated" class="blog-nav-item" ng-click="open(product)" href=""><i class="fa fa-plus-square"></i> New Sheet</a>
+        <a ng-show="authenticated" class="blog-nav-item pull-right" ng-class="getClass('/logout')" ng-href="#/logout" ng-click="logout()">Logout</a>
+        <a ng-show="authenticated" class="blog-nav-item pull-right" ng-class="getClass('/myaccount')" ng-href="#/myaccount">My Account ({{auth.username}})</a>
+        <a ng-hide="authenticated" class="blog-nav-item pull-right" ng-class="getClass('/login')" href="#/login">Login</a>
+        <a ng-hide="authenticated" class="blog-nav-item pull-right" ng-class="getClass('/register')" href="#/register">Register</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="page-content">
+      <div ng-view="" id="ng-view"></div>
+    </div>
+    
+    <hr />
+    <footer class="footer text-center">
+      <p>By TipAnything 2015</p>
+    </footer>
+
+    <toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
+  </div>
+
+  
+
+  <!-- Libraries -->
+  <script src="js/angular.min.js"></script>
+  <script src="js/ui-bootstrap-tpls-0.11.2.min.js"></script>
+  <script src="js/angular-route.min.js"></script>
+  <script src="js/angular-animate.min.js"></script>
+  <script src="js/toaster.js"></script>
+
+  <!-- AngularJS -->
+  <script src="app/app.js"></script>
+  <script src="app/data.js"></script>
+  <script src="app/directives.js"></script>
+  <script src="app/services.js"></script>
+  <script src="app/SheetsCtrl.js"></script>
+  <script src="app/NavCtrl.js"></script>
+  <script src="app/ModalCtrls.js"></script>
+  <script src="app/AuthCtrl.js"></script>
+  <script src="app/MyAccountCtrl.js"></script>
+
+  <!-- Some Bootstrap Helper Libraries -->
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/underscore.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="js/ie10-viewport-bug-workaround.js"></script>
+
+</body>
+</html>
