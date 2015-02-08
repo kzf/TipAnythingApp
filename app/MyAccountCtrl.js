@@ -31,7 +31,7 @@ app.controller('SearchCtrl', function($scope, $rootScope, Data) {
 
   $scope.keyPress = function(event) {
     if (event.charCode === 13) {
-      $scope.search($scope.query);
+      $scope.search($scope.query.query);
     }
   };
 

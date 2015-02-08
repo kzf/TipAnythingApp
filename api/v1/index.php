@@ -74,7 +74,8 @@ $app->get('/sheets/:id/outcomes/', function($id) {
           ."WHERE outcomes.sheet_id = :id";
   $bound = array(':id'=>$id);
 
-  $user_id = $sess->getSession()["userid"];
+  $session_data = $sess->getSession();
+  $user_id = $session_data["userid"];
   if ($user_id !== '') {
     $query = "SELECT outcomes.id AS outcomeid, outcomes.*, options.*, responses.response "
             ."FROM outcomes LEFT OUTER JOIN options ON outcomes.id = options.outcome_id "
@@ -125,7 +126,9 @@ $app->post('/sheets', function() use ($app) {
 
   $db->beginTransaction();
 
-  if ($sess->getSession()["userid"] !== $user_id) {
+  $session_data = $sess->getSession();
+  $session_user_id = $session_data["userid"];
+  if ($session_user_id !== $user_id) {
     echoResponse(201, array("status"=>"Error", "message"=>"Unauthorised action"));
     return;
   }
@@ -169,7 +172,9 @@ $app->post('/join', function() use ($app) {
   $sheet_id = $data->sheet_id;
   $user_id = $data->user_id;
 
-  if ($sess->getSession()["userid"] !== $user_id) {
+  $session_data = $sess->getSession();
+  $session_user_id = $session_data["userid"];
+  if ($session_user_id !== $user_id) {
     echoResponse(201, array("status"=>"Error", "message"=>"Unauthorised action"));
     return;
   }
@@ -197,7 +202,9 @@ $app->post('/respond/:sheet_id', function($sheet_id) use ($app) {
 
   $user_id = $data->user_id;
 
-  if ($sess->getSession()["userid"] !== $user_id) {
+  $session_data = $sess->getSession();
+  $session_user_id = $session_data["userid"];
+  if ($session_user_id !== $user_id) {
     echoResponse(201, array("status"=>"Error", "message"=>"Unauthorised action"));
     return;
   }
@@ -445,7 +452,9 @@ $app->get('/leaderboard/:id', function($id) {
   $query = "";
   $bound = array(':id'=>$id);
 
-  $user_id = $sess->getSession()["userid"];
+  
+  $session_data = $sess->getSession();
+  $user_id = $session_data["userid"];
   if ($user_id !== '') {
     $query = "SELECT users_auth.username, users_auth.id, players.score FROM users_auth "
              ."INNER JOIN players ON players.user_id = users_auth.id AND players.sheet_id = :id "
@@ -469,49 +478,6 @@ $app->get('/owners/:id', function($id) {
                       ."INNER JOIN owners ON owners.user_id = users_auth.id AND owners.sheet_id = :id LIMIT 10", 
                       array(':id'=>$id));
 
-  echoResponse(200, $rows);
-});
-
-// Products
-$app->get('/products', function() { 
-  global $db;
-  $rows = $db->select("SELECT id,sku,name,description,price,mrp,stock,image,packing,status FROM products", array());
-
-  echoResponse(200, $rows);
-});
-
-$app->post('/products', function() use ($app) { 
-  $data = json_decode($app->request->getBody());
-  $mandatory = array('name');
-  list($colNames, $prefixedColNames) = Database::getColumnNames($data);
-  global $db;
-  $rows = $db->insert("INSERT INTO products($colNames)"
-                      ."VALUES($prefixedColNames)",
-                      Database::columnValuesPrefix($data), $mandatory);
-  if($rows["status"]=="Success")
-      $rows["message"] = "Product added successfully.";
-  echoResponse(200, $rows);
-});
-
-$app->put('/products/:id', function($id) use ($app) {
-  $data = json_decode($app->request->getBody());
-  $condition = array(':id'=>$id);
-  $data->id = $id;
-  global $db;
-  $rows = $db->update("UPDATE products SET "
-                      .Database::columnValuesSetterString($data)
-                      ." WHERE id = :id",
-                      Database::columnValuesPrefix($data), array());
-  if($rows["status"]=="Success")
-      $rows["message"] = "Product information updated successfully.";
-  echoResponse(200, $rows);
-});
-
-$app->delete('/products/:id', function($id) { 
-  global $db;
-  $rows = $db->delete("DELETE FROM products WHERE id = :id", array(':id'=>$id));
-  if($rows["status"]=="success")
-      $rows["message"] = "Product removed successfully.";
   echoResponse(200, $rows);
 });
 
