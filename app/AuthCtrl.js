@@ -3,10 +3,9 @@ app.controller('AuthCtrl', function ($scope, $rootScope, $routeParams, $location
   $scope.login = {};
   $scope.signup = {};
 
-  $scope.doLogin = function (customer) {
-    Data.post('login', {
-      customer: customer
-    }).then(function (results) {
+  $scope.doLogin = function (user) {
+    Data.post('login', user)
+    .then(function (results) {
       Data.toast(results);
       if (results.status === "Success") {
         AuthService.updateSession().then(function() {
@@ -17,10 +16,9 @@ app.controller('AuthCtrl', function ($scope, $rootScope, $routeParams, $location
   };
 
   $scope.signup = {email:'',password:'',username:''};
-  $scope.register = function (customer) {
-    Data.post('signup', {
-      customer: customer
-    }).then(function (results) {
+  $scope.register = function (user) {
+    Data.post('signup', user)
+    .then(function (results) {
       Data.toast(results);
       if (results.status == "Success") {
         AuthService.updateSession().then(function() {

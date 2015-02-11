@@ -10,11 +10,12 @@ app.factory("AuthService", function($rootScope, $q, Data) {
 			this.hasLoaded = loaded.promise;
 
 			Data.get('session').then(function (results) {
-	      if (results.userid) {
+				var userData = results.data;
+	      if (userData.userid) {
 	        $rootScope.authenticated = true;
 	        $rootScope.auth = {
-	          id: results.userid,
-	          username: results.username
+	          id: userData.userid,
+	          username: userData.username
 	        }
 	      } else {
 	        $rootScope.authenticated = false;

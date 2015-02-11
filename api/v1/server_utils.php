@@ -1,4 +1,5 @@
 <?php 
+
 /*
  * Serves a response as JSON
  */
@@ -7,6 +8,25 @@ function echoResponse($status_code, $response) {
     $app->status($status_code);
     $app->contentType('application/json');
     echo json_encode($response,JSON_NUMERIC_CHECK);
+}
+
+/*
+ * Reads a JSON response
+ */
+function dataArrayFromResponse($responseData) {
+    $data = (array) json_decode($responseData);
+    return $data;
+}
+
+/*
+ * Build a response array
+ */
+function responseArray($status, $message, $data = array()) {
+    $response = array();
+    $response['status'] = $status;
+    $response['message'] = $message;
+    $response['data'] = $data;
+    return $response;
 }
 
 /*

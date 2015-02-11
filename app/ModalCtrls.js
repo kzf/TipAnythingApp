@@ -31,7 +31,7 @@ app.controller('NewSheetCtrl', function ($scope, $rootScope, $modalInstance, $lo
     AuthService.hasLoaded.then(function() {
       var sheet = $scope.sheet;
       sheet.user_id = $rootScope.auth.id.toString();
-      Data.post('sheets', sheet).then(function (result) {
+      Data.put('sheets', sheet).then(function (result) {
         Data.toast(result);
         if (result.status != 'Error') {
           $modalInstance.close();

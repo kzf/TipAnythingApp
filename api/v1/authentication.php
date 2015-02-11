@@ -2,120 +2,93 @@
 require_once 'Database.php';
 require_once 'server_utils.php';
 
-/*
- * Session Management
- */
+
 $app->get('/session', function() {
   global $sess;
-  $session = $sess->getSession();
-  $response["userid"] = $session['userid'];
-  $response["email"] = $session['email'];
-  $response["username"] = $session['username'];
-  echoResponse(200, $session);
+  $session = Session::getSession();
+
+  $data["userid"] = $session['userid'];
+  $data["email"] = $session['email'];
+  $data["username"] = $session['username'];
+
+  echoResponse(200, $response = responseArray("Success", "Session details retrieved", $data));
 });
 
 $app->get('/logout', function() {
   global $sess;
-  $session = $sess->destroySession();
-  $response["status"] = "Info";
-  $response["message"] = "Logged out successfully";
-  echoResponse(200, $response);
+  $session = Session::destroySession();
+  echoResponse(200, responseArray("Success", "Logged out successfully"));
 });
 
 /*
  * Login to user account
  */
 $app->post('/login', function() use ($app) {
-  global $db;
+  global $db, $sess;
   $response = array();
 
-  // Get the API request
-  $r = json_decode($app->request->getBody());
-  $password = $r->customer->password;
-  $username = $r->customer->username;
+  // Get the request data
+  $data = dataArrayFromResponse($app->request->getBody());
 
   $user = $db->select("SELECT * FROM users_auth WHERE username = :username",
-                              array(':username'=>$username));
+                              array(':username'=>$data["username"]));
 
   if ($user["status"] === "Success") {
-    // We found a user with the specified username
-    // Give the user data a shorter name
     $user = $user["data"][0];
 
     // Check password hashes match
-    if (passwordHash::check_password($user["password"],$password)) {
-      $response['status'] = "Success";
-      $response['message'] = "You have been logged in.";
-      $response['username'] = $user['username'];
-      $response['userid'] = $user['id'];
-      $response['email'] = $user['email'];
-      $response['createdAt'] = $user['created'];
+    if (passwordHash::check_password($user["password"], $data["password"])) {
+      $response = responseArray("Success", "Logged in successfully");
 
-      if (!isset($_SESSION)) {
-        session_start();
-      }
-
-      $_SESSION['userid'] = $user['id'];
-      $_SESSION['email'] = $user['email'];
-      $_SESSION['username'] = $user['username'];
-
+      Session::setSession($user);
     } else {
-      $response['status'] = "Error";
-      $response['message'] = "Incorrect password.";
+      $response = responseArray("Error", "Password incorrect");
     }
   } else {
-    // Did not find a user
-    $response['status'] = "Error";
-    $response['message'] = "No user with that username.";
+    $response = responseArray("Error", "No user with that username");
   }
+
   echoResponse(200, $response);
 });
 
-
+/*
+ * Sign up a new user account
+ */
 $app->post('/signup', function() use ($app) {
   global $db;
   $response = array();
 
-  $r = json_decode($app->request->getBody());
-  $username = $r->customer->username;
-  $email = $r->customer->email;
-  $password = $r->customer->password;
+  $data = dataArrayFromResponse($app->request->getBody());
 
+  // Get users with the same username or email address to make sure they don't
+  // already have an account
   $userRecord = $db->select("SELECT * FROM users_auth WHERE username=':username' or email=':email' LIMIT 1",
-                              array(':username'=>$username, ':email'=>$email));
+                              array(':username'=>$data["username"], ':email'=>$data["email"]));
   
   if ($userRecord["status"] === "Warning") {
-    $r->customer->password = passwordHash::hash($password);
+    $data["password"] = passwordHash::hash($data["password"]);
 
-    $result = $db->insert("INSERT INTO users_auth(username,email,password)"
-                            ."VALUES(:username,:email,:password)",
-                            array(':username'=>$username, ':email'=>$email, ':password'=>$r->customer->password),
-                            array('username', 'password', 'email'));
+    // Insert the
+    $result = $db->insert("
+      INSERT INTO users_auth(username,email,password)
+      VALUES(:username,:email,:password)
+    ",
+                array(':username'=>$data["username"], ':email'=>$data["email"], ':password'=>$data["password"]),
+                array('username', 'password', 'email'));
 
     if ($result["status"] === "Success") {
-      $response["status"] = "Success";
-      $response["message"] = "Your account has been created";
-      $response["userid"] = $result["data"];
+      $response = responseArray("Success", "User account created");
 
-      if (!isset($_SESSION)) {
-        session_start();
-      }
+      Session::setSession(array("id"=>$result["data"], "email"=>$data["email"], "username"=>$data["username"]));
 
-      $_SESSION['userid'] = $response["userid"];
-      $_SESSION['username'] = $username;
-      $_SESSION['email'] = $email;
-
-      echoResponse(200, $response);
     } else {
-      $response["status"] = "Error";
-      $response["message"] = "Failed to create account";
-      echoResponse(201, $response);
+      $response = responseArray("Error", "Failed to create user");
     }
   } else {
-    $response["status"] = "Error";
-    $response["message"] = "There is already a user with that username or email address";
-    echoResponse(201, $response);
+    $response = responseArray("Error", "There is already a user with that email address or username");
   }
+
+  echoResponse(200, $response);
 });
 
 
